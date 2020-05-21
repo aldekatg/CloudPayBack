@@ -1,0 +1,153 @@
+<mat-toolbar color="primary">
+  <span>CloudPayments > Поиск транзакции по дате</span>
+
+  <!-- This fills the remaining space of the current row -->
+  <span class="example-fill-remaining-space"></span>
+
+  <div class="date-picker">
+    <mat-form-field class="example-full-width">
+      <mat-label>{{dateService.date| async | moment}}</mat-label>
+      <input matInput [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker">
+        <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+  </div>
+</mat-toolbar>
+<mat-tab-group mat-align-tabs="center" animationDuration="1000ms">
+  <mat-tab label="Мониторинг">
+    <div class="container">
+      <!--      <mat-form-field>-->
+      <!--        <mat-label>Фильтр</mat-label>-->
+      <!--        <input matInput (keyup)="applyFilter($event)">-->
+      <!--      </mat-form-field>-->
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef> No.</th>
+          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Имя плательщика</th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="weight">
+          <th mat-header-cell *matHeaderCellDef> ID плательщика</th>
+          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="symbol">
+          <th mat-header-cell *matHeaderCellDef> Email плательщика</th>
+          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <!--      <mat-form-field>-->
+      <!--        <mat-label>Фильтр</mat-label>-->
+      <!--        <input matInput (keyup)="applyFilter($event)">-->
+      <!--      </mat-form-field>-->
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef> No.</th>
+          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Имя плательщика</th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="weight">
+          <th mat-header-cell *matHeaderCellDef> ID плательщика</th>
+          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="symbol">
+          <th mat-header-cell *matHeaderCellDef> Email плательщика</th>
+          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="База клиентов">
+    <div class="container">
+      <div class="left-container">
+        <footer>
+          <form (ngSubmit)="submit()" [formGroup]="form">
+            <input type="text" formControlName="title">
+            <button type="submit" class="btn btn-primary" mat-button [disabled]="form.invalid">ADD</button>
+          </form>
+        </footer>
+      </div>
+      <div class="right-container">
+        <tr *ngFor="let row of dateData; let i = index">
+          <td>{{row}}</td>
+<!--          <td>{{row.TS}}</td>-->
+<!--          <td>{{row.Node}}</td>-->
+<!--          <td>{{row.node1}}</td>-->
+<!--          <td>{{row.node2}}</td>-->
+<!--          <td>{{row.node3}}</td>-->
+        </tr>
+      </div>
+    </div>
+
+  </mat-tab>
+  <mat-tab label="Cтатистика">Cтатистика</mat-tab>
+</mat-tab-group>
+<!--<div class="container">-->
+<!--  <mat-form-field>-->
+<!--    <mat-label>Фильтр</mat-label>-->
+<!--    <input matInput (keyup)="applyFilter($event)">-->
+<!--  </mat-form-field>-->
+
+<!--  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">-->
+
+<!--    &lt;!&ndash; Position Column &ndash;&gt;-->
+<!--    <ng-container matColumnDef="position">-->
+<!--      <th mat-header-cell *matHeaderCellDef> No.</th>-->
+<!--      <td mat-cell *matCellDef="let element"> {{element.position}} </td>-->
+<!--    </ng-container>-->
+
+<!--    &lt;!&ndash; Name Column &ndash;&gt;-->
+<!--    <ng-container matColumnDef="name">-->
+<!--      <th mat-header-cell *matHeaderCellDef> Имя плательщика</th>-->
+<!--      <td mat-cell *matCellDef="let element"> {{element.name}} </td>-->
+<!--    </ng-container>-->
+
+<!--    &lt;!&ndash; Weight Column &ndash;&gt;-->
+<!--    <ng-container matColumnDef="weight">-->
+<!--      <th mat-header-cell *matHeaderCellDef> ID плательщика</th>-->
+<!--      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>-->
+<!--    </ng-container>-->
+
+<!--    &lt;!&ndash; Symbol Column &ndash;&gt;-->
+<!--    <ng-container matColumnDef="symbol">-->
+<!--      <th mat-header-cell *matHeaderCellDef> Email плательщика</th>-->
+<!--      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>-->
+<!--    </ng-container>-->
+
+<!--    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+<!--    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
+<!--  </table>-->
+<!--</div>-->
