@@ -16,6 +16,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MomentPipe} from "./shared/moment.pipe";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 
 @NgModule({
@@ -32,8 +34,10 @@ import {MatButtonModule} from "@angular/material/button";
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatGridListModule,
     MatTabsModule,
     MatDatepickerModule,
+    MatPaginatorModule,
     MatNativeDateModule,
     MatIconModule,
     HttpClientModule,

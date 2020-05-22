@@ -3,11 +3,13 @@ import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {Observable} from "rxjs";
 import * as moment from "moment";
+import {DateService} from "./data.service";
 
 export interface Task {
   id?: string
-  title: string
-  date?: string
+  datePerson: string
+  name: string
+  phone: string
 }
 
 @Injectable({providedIn: 'root'})
@@ -15,27 +17,28 @@ export interface Task {
 export class TaskService {
   static url = 'https://sport-project-e052f.firebaseio.com/'
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private dateService: DateService) {
 
   }
 
-  load(): Observable<Task[]>{
+  load(): Observable<Task[]> {
     return this.http
       .get<Task[]>(`${TaskService.url}.json`)
       .pipe(map(value => {
-        console.log(value)
-        if (!value){
+        if (!value) {
           return []
         }
-        return Object.keys(value).map(key => ({...value[key], id: key}))
+        return value
       }))
   }
 
   create(task: Task): Observable<Task> {
-    return this.http.post<any>(`${TaskService.url}/${task.date}.json`, task)
+    console.log(task)
+    return this.http.post<any>(`${TaskService.url}/${this.dateService.date.value.format('DD-MM-YYYY')}.json`, task)
       .pipe(map(res => {
         console.log(res)
-        return res
+        return task
       }))
   }
 }
