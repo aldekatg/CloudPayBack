@@ -24,9 +24,25 @@ table {
   align-items: center
 }
 
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
 .left-container {
   display: flex;
   flex-direction: column;
+}
+
+.container-el {
+  height: 100vh;
 }
 
 .item-center {

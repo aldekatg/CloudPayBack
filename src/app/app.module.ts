@@ -18,14 +18,18 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatDialogModule} from '@angular/material/dialog';
+import { DialogOverviewComponent } from './dialog-overview/dialog-overview.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MomentPipe,
+    DialogOverviewComponent,
   ],
   imports: [
+
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -35,6 +39,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     MatFormFieldModule,
     MatInputModule,
     MatGridListModule,
+    MatDialogModule,
     MatTabsModule,
     MatDatepickerModule,
     MatPaginatorModule,
