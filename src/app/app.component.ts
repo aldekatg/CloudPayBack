@@ -9,89 +9,125 @@ import {getSortHeaderNotContainedWithinSortError} from "@angular/material/sort/s
 import {MatDialog, MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {DialogOverviewComponent} from "./dialog-overview/dialog-overview.component";
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
 export interface DialogData {
-  animal: string;
   name: string;
+  phone: string;
+  datePerson: string;
+  status: string;
 }
 
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
+const STATUS_DATA = [
+  {value: 'call-0', viewValue: 'Связаться'},
+  {value: 'sink-1', viewValue: 'Думает'},
+  {value: 'pay-2', viewValue: 'Жду оплату'},
+  {value: 'payed-2', viewValue: 'Оплачено'},
+  {value: 'cancel-2', viewValue: 'Отказ'}
+]
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.css'],
 })
+
 
 export class AppComponent {
   title = 'CloudPay';
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  tableName: string[] = ['date', 'name', 'phone'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-
-  value;
   dataStorage: MatTableDataSource<any>;
+  table: string[] = ['date', 'name', 'phone', 'status', 'button'];
+  tableData: string[] = ['date', 'name', 'phone', 'status'];
   data = [];
   form: FormGroup;
-
+  globalData = [];
+  status = STATUS_DATA;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  ngOnInit() {
+  constructor(private _http: HttpClient,
+              private tasksService: TaskService,
+              public dialog: MatDialog) {
+
+  }
+
+  ngOnInit(): void {
     this.dataStorage = new MatTableDataSource<any>()
+
+
     this.form = new FormGroup({
       date: new FormControl('', Validators.required),
       name: new FormControl('', Validators.required),
       phone: new FormControl('', Validators.required),
+      status: new FormControl('', Validators.required)
     })
+
+// загрузка данных из firebase
     this.tasksService.load().subscribe(value => {
+      console.log(value)
       let data = Object.keys(value);
       for (let i = 0; i < data.length; i++) {
         let info = Object.keys(value[data[i]])
         for (let z = 0; z < info.length; z++) {
           this.data.push(value[data[i]][info[z]])
+          value[data[i]][info[z]]['id'] = info[z];
+          this.changeClick(value[data[i]][info[z]]);
+
         }
       }
+      console.log(this.data);
       this.dataStorage.data = this.data;
-      this.dataStorage.paginator = this.paginator;
     }, error => console.log(error))
-    console.log(this.dataStorage);
 
   }
 
-  constructor(private _http: HttpClient,
-              public  dateService: DateService,
-              private tasksService: TaskService,
-              public dialog: MatDialog) {
+
+  changeClick(item) {
+    switch (item.status) {
+      case 'Оплачено': {
+        item['color'] = 'green';
+        break;
+      }
+      case 'Связаться': {
+        item['color'] = 'pink';
+        break;
+      }
+      case 'Думает': {
+        item['color'] = 'yellow';
+        break;
+      }
+      case 'Отказ': {
+        item['color'] = 'red';
+        break;
+      }
+      case 'Жду оплату': {
+        item['color'] = 'brown';
+        break;
+      }
+      default: {
+        item['color'] = 'white';
+        break;
+      }
+    }
+    this.tasksService.change(item).subscribe(value => {
+      console.log(value)
+    })
   }
 
   submit() {
     let datePerson = this.form.value.date;
     let name = this.form.value.name;
     let phone = this.form.value.phone;
+    let status = this.form.value.status;
+
+    datePerson = this.dateFormatter(datePerson);
+
+
     const task: Task = {
       datePerson,
       name,
       phone,
+      status
     }
+    console.log(datePerson)
     this.tasksService.create(task).subscribe(task => {
       this.data.push(task);
       this.form.reset();
@@ -101,10 +137,20 @@ export class AppComponent {
     console.log(this.dataStorage)
   }
 
+  dateFormatter(dateGet) {
+    let date = new Date(dateGet);
+    let dd = date.getDate();
+    let mm = date.getMonth() + 1;
+    let yyyy = date.getFullYear();
+    console.log(dd + "-" + mm + "-" + yyyy);
+    return dd + "-" + mm + "-" + yyyy;
+  }
+
   clickRow(data) {
-    console.log(data);
+    console.log(data)
     const dialogRef = this.dialog.open(DialogOverviewComponent, {
-      width: '250px',
+      width: '500px',
+      data: data
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -112,9 +158,4 @@ export class AppComponent {
     });
   }
 
-
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  // }
 }

@@ -19,7 +19,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatDialogModule} from '@angular/material/dialog';
-import { DialogOverviewComponent } from './dialog-overview/dialog-overview.component';
+import {DialogOverviewComponent} from './dialog-overview/dialog-overview.component';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { DialogOverviewComponent } from './dialog-overview/dialog-overview.compo
     BrowserAnimationsModule,
     MatToolbarModule,
     MatTableModule,
+    MatSelectModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

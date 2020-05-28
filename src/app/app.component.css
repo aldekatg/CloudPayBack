@@ -3,16 +3,27 @@
   width: 100%;
 }
 
+.example-container {
+  height: 700px;
+  overflow: auto;
+  margin: 20px;
+}
+
 table {
-  overflow-y: auto;
-  width: 90%;
+  width: 100%;
+}
+
+th, td {
+  overflow: hidden;
+  width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .container {
-  margin-top: 20px;
   display: flex;
+  margin: 10px 20px 10px 20px;
   justify-content: center;
-  flex-direction: row;
   align-items: center
 }
 
@@ -20,7 +31,7 @@ table {
   margin-top: 20px;
   display: flex;
   justify-content: center;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center
 }
 

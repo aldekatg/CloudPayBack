@@ -10,6 +10,7 @@ export interface Task {
   datePerson: string
   name: string
   phone: string
+  status: string
 }
 
 @Injectable({providedIn: 'root'})
@@ -34,8 +35,18 @@ export class TaskService {
   }
 
   create(task: Task): Observable<Task> {
-    console.log(task)
+    task['dateSave'] = this.dateService.date.value.format('DD-MM-YYYY');
     return this.http.post<any>(`${TaskService.url}/${this.dateService.date.value.format('DD-MM-YYYY')}.json`, task)
+      .pipe(map(res => {
+        console.log(`${TaskService.url}/${this.dateService.date.value.format('DD-MM-YYYY')}.json`, task)
+        console.log(res)
+        return task
+      }))
+  }
+
+  change(task: Task): Observable<Task> {
+    console.log(task)
+    return this.http.put<any>(`${TaskService.url}${task['dateSave']}/${task.id}.json`, task)
       .pipe(map(res => {
         console.log(res)
         return task

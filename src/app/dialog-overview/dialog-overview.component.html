@@ -1,12 +1,26 @@
-<h1 mat-dialog-title>Hi {{data.name}}</h1>
-<div mat-dialog-content>
-  <p>What's your favorite animal?</p>
+<h1 mat-dialog-title>Изменение пользователя: {{data.name}}</h1>
+<div class="container" mat-dialog-content>
+  <p>Изменить данные пользователя</p>
   <mat-form-field>
-    <mat-label>Favorite Animal</mat-label>
-<!--    <input matInput [(ngModel)]="data.animal">-->
+    <mat-label>{{data.phone}}</mat-label>
+    <input matInput placeholder="Изменить номер">
   </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+  <mat-form-field>
+    <mat-label>{{data.name}}</mat-label>
+    <input matInput placeholder="Изменить имя">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{data.datePerson}}</mat-label>
+    <input matInput placeholder="Изменить имя">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Статус</mat-label>
+    <mat-select [(value)]="data.status">
+      <mat-option style="background: pink" value="Связаться">Связаться</mat-option>
+      <mat-option style="background: yellow" value="Думает">Думает</mat-option>
+      <mat-option style="background: brown" value="Жду оплату">Жду оплату</mat-option>
+      <mat-option style="background: green" value="Оплачено">Оплачено</mat-option>
+      <mat-option style="background: red" value="Отказ">Отказ</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
