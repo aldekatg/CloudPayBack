@@ -13,6 +13,16 @@
     <div class="example-container mat-elevation-z8">
       <table mat-table [dataSource]="dataStorage">
         <!-- Name Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef> Дата окончания абон.</th>
+          <td mat-cell *matCellDef="let element"> {{element.datePerson}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="deadLine">
+          <th mat-header-cell *matHeaderCellDef> Конец абонемента</th>
+          <td mat-cell *matCellDef="let element"> {{element.deadLine}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef> Имя плательщика</th>
           <td mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -23,16 +33,13 @@
           <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef> Дата окончания абон.</th>
-          <td mat-cell *matCellDef="let element"> {{element.datePerson}} </td>
-        </ng-container>
 
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef> Статус плательщика</th>
-          <td mat-cell *matCellDef="let element" [bgColor]="element.color"
+          <td mat-cell *matCellDef="let element" [bgColor]="element.color ? element.color : 'white'"
               style="border-radius: 15px; text-align: center">
             <mat-select [(value)]="element.status" (selectionChange)="changeClick(element)">
+              <mat-option style="background: white" value="Не отмечен">Не отмечен</mat-option>
               <mat-option style="background: pink" value="Связаться">Связаться</mat-option>
               <mat-option style="background: yellow" value="Думает">Думает</mat-option>
               <mat-option style="background: brown" value="Жду оплату">Жду оплату</mat-option>
@@ -42,14 +49,8 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="button">
-          <th mat-header-cell *matHeaderCellDef> Кнопка</th>
-          <td mat-cell *matCellDef="let element">{{element.datePerson}}
-          </td>
-        </ng-container>
-
         <tr mat-header-row *matHeaderRowDef="table; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: tableData;"
+        <tr mat-row *matRowDef="let row; columns: table;"
             class="example-element-row"></tr>
       </table>
     </div>
@@ -80,16 +81,6 @@
                 <mat-icon matSuffix>mode_edit</mat-icon>
               </mat-form-field>
 
-              <mat-form-field class="example-full-width">
-                <mat-label>Статус</mat-label>
-                <mat-select matNativeControl required formControlName="status">
-                  <mat-option value="Связаться">Связаться</mat-option>
-                  <mat-option value="Думает">Думает</mat-option>
-                  <mat-option value="Жду оплату">Жду оплату</mat-option>
-                  <mat-option value="Оплачено">Оплачено</mat-option>
-                  <mat-option value="Отказ">Отказ</mat-option>
-                </mat-select>
-              </mat-form-field>
 
               <div class="item-center">
                 <button type="submit" class="btn btn-primary" mat-raised-button color="primary"
@@ -125,7 +116,7 @@
               </td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="tableData; sticky: true"></tr>
+            <tr mat-header-row *matHeaderRowDef="tableData"></tr>
             <tr mat-row *matRowDef="let row; columns: tableData;"
                 class="example-element-row"
                 (click)="clickRow(row)"></tr>

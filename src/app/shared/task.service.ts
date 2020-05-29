@@ -36,7 +36,7 @@ export class TaskService {
 
   create(task: Task): Observable<Task> {
     task['dateSave'] = this.dateService.date.value.format('DD-MM-YYYY');
-    return this.http.post<any>(`${TaskService.url}/${this.dateService.date.value.format('DD-MM-YYYY')}.json`, task)
+    return this.http.post<any>(`${TaskService.url}/${task['dateSave']}.json`, task)
       .pipe(map(res => {
         console.log(`${TaskService.url}/${this.dateService.date.value.format('DD-MM-YYYY')}.json`, task)
         console.log(res)
