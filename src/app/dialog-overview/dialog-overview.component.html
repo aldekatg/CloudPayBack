@@ -1,26 +1,43 @@
 <h1 mat-dialog-title>Изменение пользователя: {{data.name}}</h1>
-<div class="container" mat-dialog-content>
-  <p>Изменить данные пользователя</p>
-  <mat-form-field>
-    <mat-label>{{data.phone}}</mat-label>
-    <input matInput placeholder="Изменить номер">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>{{data.name}}</mat-label>
-    <input matInput placeholder="Изменить имя">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>{{data.datePerson}}</mat-label>
-    <input matInput placeholder="Изменить имя">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Статус</mat-label>
-    <mat-select [(value)]="data.status">
-      <mat-option style="background: pink" value="Связаться">Связаться</mat-option>
-      <mat-option style="background: yellow" value="Думает">Думает</mat-option>
-      <mat-option style="background: brown" value="Жду оплату">Жду оплату</mat-option>
-      <mat-option style="background: green" value="Оплачено">Оплачено</mat-option>
-      <mat-option style="background: red" value="Отказ">Отказ</mat-option>
-    </mat-select>
-  </mat-form-field>
+<p>Изменить данные пользователя</p>
+<footer>
+  <form (ngSubmit)="saveChange()" [formGroup]="form">
+    <div class="container">
+      <mat-form-field>
+        <mat-label>{{data.phone}}</mat-label>
+        <input matInput placeholder="Изменить номер" [(value)]="data.phone" autocomplete="off"
+               formControlName="phone">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{data.name}}</mat-label>
+        <input matInput placeholder="Изменить имя" autocomplete="off" [(value)]="data.name" formControlName="name">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{data.datePerson}}</mat-label>
+        <input matInput [matDatepicker]="picker"
+               formControlName="select"
+               autocomplete="off"
+               [(value)]="data.datePerson"
+               (focus)="picker.open()"
+               (click)="picker.open()">
+        <mat-datepicker-toggle lang="ru" matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Статус</mat-label>
+        <mat-select [(value)]="data.status">
+          <mat-option style="background: white" value="Не отмечен">Не отмечен</mat-option>
+          <mat-option style="background: #9933CC" value="Связаться">Связаться</mat-option>
+          <mat-option style="background: #6666FF" value="Думает">Думает</mat-option>
+          <mat-option style="background: #FF6633" value="Жду оплату">Жду оплату</mat-option>
+          <mat-option style="background: #009933" value="Оплачено">Оплачено</mat-option>
+          <mat-option style="background: #FF3333" value="Отказ">Отказ</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+</footer>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Отменить изменения</button>
+  <button mat-button cdkFocusInitial (click)="saveChange()">Сохранить изменения</button>
 </div>

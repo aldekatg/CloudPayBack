@@ -21,6 +21,9 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatDialogModule} from '@angular/material/dialog';
 import {DialogOverviewComponent} from './dialog-overview/dialog-overview.component';
 import {MatSelectModule} from '@angular/material/select';
+import {MatSortModule} from '@angular/material/sort';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -38,9 +41,12 @@ import {MatSelectModule} from '@angular/material/select';
     MatTableModule,
     MatSelectModule,
     ReactiveFormsModule,
+    MatSortModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSnackBarModule,
     MatGridListModule,
+    MatProgressSpinnerModule,
     MatDialogModule,
     MatTabsModule,
     MatDatepickerModule,

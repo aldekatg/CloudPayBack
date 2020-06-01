@@ -13,18 +13,15 @@ table {
   width: 100%;
 }
 
-th, td {
-  overflow: hidden;
-  width: 200px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .container {
   display: flex;
   margin: 10px 20px 10px 20px;
   justify-content: center;
   align-items: center
+}
+
+th.mat-sort-header-sorted {
+  color: black;
 }
 
 .container-base {
@@ -43,9 +40,6 @@ tr.example-element-row:not(.example-expanded-row):active {
   background: #efefef;
 }
 
-.example-element-row td {
-  border-bottom-width: 0;
-}
 
 .left-container {
   display: flex;
@@ -65,7 +59,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .mat-form-field {
   font-size: 14px;
-  width: 80%;
+  width: 100%;
 }
 
 .example-fill-remaining-space {

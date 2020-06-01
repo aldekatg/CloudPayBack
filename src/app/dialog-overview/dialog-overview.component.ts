@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {DialogData} from "../app.component";
+import {AppComponent, DialogData} from "../app.component";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Task, TaskService} from "../shared/task.service";
 
 
 interface Status {
@@ -24,10 +26,12 @@ const STATUS_DATA: Status[] = [
 export class DialogOverviewComponent implements OnInit {
   status = STATUS_DATA;
   selected;
+  form: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    public tasksService: TaskService) {
   }
 
   onNoClick(): void {
@@ -35,8 +39,35 @@ export class DialogOverviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data)
+    this.form = new FormGroup({
+      date: new FormControl('', Validators.required),
+      name: new FormControl('', Validators.required),
+      phone: new FormControl('', Validators.required),
+      status: new FormControl
+    })
     this.selected = this.data.status;
   }
 
+  saveChange() {
+    let datePerson = this.form.value.date;
+    let name = this.form.value.name;
+    let phone = this.form.value.phone;
+    let status = this.form.value.status;
+    let id = this.data['id'];
+    let dateSave = this.data['dateSave']
+
+    const
+      task: Task = {
+        datePerson,
+        name,
+        phone,
+        status,
+        id,
+        dateSave
+      }
+    console.log(this.data)
+    this.tasksService.change(task).subscribe(task => {
+      console.log(task)
+    }, error => console.log(error))
+  }
 }
