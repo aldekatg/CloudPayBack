@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
-import {AppRoutingModule} from './app-routing.module';
+import {AppRoutingModule, routes} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -24,6 +24,10 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatSortModule} from '@angular/material/sort';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {HomeComponent} from './home/home.component';
+import {RouterModule} from "@angular/router";
+import {AuthComponent} from './auth/auth.component';
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
@@ -31,9 +35,10 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     AppComponent,
     MomentPipe,
     DialogOverviewComponent,
+    HomeComponent,
+    AuthComponent,
   ],
   imports: [
-
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -56,6 +61,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     HttpClientModule,
     MatButtonModule,
 
+    RouterModule.forRoot(routes),
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

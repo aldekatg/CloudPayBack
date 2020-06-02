@@ -1,0 +1,21 @@
+:host {
+  flex-grow: 1;
+  height: 80vh;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+mat-card {
+  min-width: 350px;
+}
+
+.form-width {
+  width: 100%;
+}

@@ -1,0 +1,180 @@
+<div>
+  <mat-tab-group mat-align-tabs="center" animationDuration="1000ms">
+    <mat-tab label="Мониторинг">
+      <div class="example-container mat-elevation-z8">
+        <table mat-table [dataSource]="dataStorageDead" matSort>
+          <!-- Name Column -->
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Дата окончания абон.</th>
+            <td mat-cell *matCellDef="let element"> {{element.datePerson}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="deadLine">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Конец абонемента</th>
+            <td mat-cell *matCellDef="let element"> {{element.deadLine}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Имя плательщика</th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="phone">
+            <th mat-header-cell *matHeaderCellDef> Телефон плательщика</th>
+            <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="btn">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center">Сохранить</th>
+            <td mat-cell *matCellDef="let element" style="display: flex; justify-content: center;align-items: center">
+              <div class="example-button-container">
+                <button mat-fab color="primary" aria-label="Example icon button with a delete icon"
+                        (click)="saveBtn(element)">
+                  <mat-icon>save_it</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Статус плательщика</th>
+            <td mat-cell *matCellDef="let element" [bgColor]="element.color ? element.color : 'white'"
+                style="border-radius: 15px; text-align: center">
+              <mat-select [(value)]="element.status" (selectionChange)="changeClick(element)">
+                <mat-option style="background: white" value="Не отмечен">Не отмечен</mat-option>
+                <mat-option style="background: #9933CC" value="Связаться">Связаться</mat-option>
+                <mat-option style="background: #6666FF" value="Думает">Думает</mat-option>
+                <mat-option style="background: #FF6633" value="Жду оплату">Жду оплату</mat-option>
+                <mat-option style="background: #009933" value="Оплачено">Оплачено</mat-option>
+                <mat-option style="background: #FF3333" value="Отказ">Отказ</mat-option>
+              </mat-select>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="table; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: table;"
+              class="example-element-row">
+          </tr>
+        </table>
+      </div>
+    </mat-tab>
+    <mat-tab label="База клиентов">
+      <mat-grid-list cols="2">
+        <mat-grid-tile>
+          <div class="left-container">
+            <footer>
+              <form (ngSubmit)="submit()" [formGroup]="form">
+                <mat-form-field>
+                  <mat-label>Дата абонемента</mat-label>
+                  <input matInput [matDatepicker]="picker" formControlName="dateStart" autocomplete="off"
+                         (focus)="picker.open()"
+                         (click)="picker.open()">
+                  <mat-datepicker-toggle lang="ru" matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                  <mat-label>Имя абонемента</mat-label>
+                  <input matInput placeholder="Введите имя..." formControlName="name">
+                  <mat-icon matSuffix>user</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                  <mat-label>Телефон абонемента</mat-label>
+                  <span matPrefix>+7 &nbsp;</span>
+                  <input type="tel" maxlength="10" matInput placeholder="777-123-45-67" formControlName="phone">
+                  <mat-icon matSuffix>mode_edit</mat-icon>
+                </mat-form-field>
+
+
+                <div class="item-center">
+                  <button type="submit" class="btn btn-primary" mat-raised-button color="primary"
+                          [disabled]="form.invalid">Добавить пользователя
+                  </button>
+                </div>
+              </form>
+            </footer>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="example-container mat-elevation-z8" style="width: 100%;">
+            <table mat-table [dataSource]="dataStorage">
+              <!-- Name Column -->
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef> Дата след. оплаты</th>
+                <td mat-cell *matCellDef="let element"> {{element.datePerson}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="dateStart">
+                <th mat-header-cell *matHeaderCellDef> Дата регистрации</th>
+                <td mat-cell *matCellDef="let element"> {{element.dateStart}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Имя плательщика</th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="phone">
+                <th mat-header-cell *matHeaderCellDef> Телефон плательщика</th>
+                <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Статус плательщика</th>
+                <td mat-cell *matCellDef="let element">{{element.status}}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="tableData; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: tableData;"
+                  class="example-element-row"
+                  (click)="clickRow(row)"></tr>
+            </table>
+          </div>
+
+        </mat-grid-tile>
+      </mat-grid-list>
+
+
+    </mat-tab>
+  </mat-tab-group>
+  <!--<div class="container">-->
+  <!--  <mat-form-field>-->
+  <!--    <mat-label>Фильтр</mat-label>-->
+  <!--    <input matInput (keyup)="applyFilter($event)">-->
+  <!--  </mat-form-field>-->
+
+  <!--  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">-->
+
+  <!--    &lt;!&ndash; Position Column &ndash;&gt;-->
+  <!--    <ng-container matColumnDef="position">-->
+  <!--      <th mat-header-cell *matHeaderCellDef> No.</th>-->
+  <!--      <td mat-cell *matCellDef="let element"> {{element.position}} </td>-->
+  <!--    </ng-container>-->
+
+  <!--    &lt;!&ndash; Name Column &ndash;&gt;-->
+  <!--    <ng-container matColumnDef="name">-->
+  <!--      <th mat-header-cell *matHeaderCellDef> Имя плательщика</th>-->
+  <!--      <td mat-cell *matCellDef="let element"> {{element.name}} </td>-->
+  <!--    </ng-container>-->
+
+  <!--    &lt;!&ndash; Weight Column &ndash;&gt;-->
+  <!--    <ng-container matColumnDef="weight">-->
+  <!--      <th mat-header-cell *matHeaderCellDef> ID плательщика</th>-->
+  <!--      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>-->
+  <!--    </ng-container>-->
+
+  <!--    &lt;!&ndash; Symbol Column &ndash;&gt;-->
+  <!--    <ng-container matColumnDef="symbol">-->
+  <!--      <th mat-header-cell *matHeaderCellDef> Email плательщика</th>-->
+  <!--      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>-->
+  <!--    </ng-container>-->
+
+  <!--    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+  <!--    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
+  <!--  </table>-->
+  <!--</div>-->
+</div>
+<router-outlet></router-outlet>
