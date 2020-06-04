@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {HomeComponent, DialogData} from "../home/home.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -65,9 +65,6 @@ export class DialogOverviewComponent implements OnInit {
         id,
         dateSave
       }
-    console.log(this.data)
-    this.tasksService.change(task).subscribe(task => {
-      console.log(task)
-    }, error => console.log(error))
+
   }
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatSort} from "@angular/material/sort";
@@ -8,6 +8,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {DateService} from "../shared/data.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import * as moment from "moment";
+import {DialogOverviewComponent} from "../dialog-overview/dialog-overview.component";
 
 export interface DialogData {
   name: string;
@@ -37,7 +38,6 @@ export class HomeComponent implements OnInit {
   tableData: string[] = ['date', 'dateStart', 'name', 'phone', 'status'];
   data = [];
   dataDeadLine = [];
-  index = []
   spinner = true;
   form: FormGroup;
   status = STATUS_DATA;
@@ -214,15 +214,6 @@ export class HomeComponent implements OnInit {
     return days;
   }
 
-  addMonth(date, mon) {
-    let dateStart = moment(date, 'DD-MM-YYYY');
-    let dd = dateStart.date();
-    let mm = dateStart.month() + 1 + mon;
-    let yy = dateStart.year();
-    return dd + '-' + mm + '-' + yy;
-
-  }
-
   clickRow(data) {
     // const dialogRef = this.dialog.open(DialogOverviewComponent, {
     //   width: '600px',
@@ -230,7 +221,9 @@ export class HomeComponent implements OnInit {
     // });
     //
     // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
+    // this.tasksService.change(task).subscribe(task => {
+    //   console.log(task)
+    // }, error => console.log(error))
     // });
   }
 }
