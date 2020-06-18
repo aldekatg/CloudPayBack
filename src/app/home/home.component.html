@@ -28,7 +28,8 @@
             <th mat-header-cell *matHeaderCellDef style="text-align: center">Сохранить</th>
             <td mat-cell *matCellDef="let element" style="display: flex; justify-content: center;align-items: center">
               <div class="example-button-container">
-                <button mat-fab color="primary" aria-label="Example icon button with a delete icon"
+                <button [disabled]="element.disabled" mat-fab color="primary"
+                        aria-label="Example icon button with a delete icon"
                         (click)="saveBtn(element)">
                   <mat-icon>save_it</mat-icon>
                 </button>
