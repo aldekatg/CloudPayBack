@@ -42,7 +42,7 @@
             <th mat-header-cell *matHeaderCellDef style="text-align: center"> Статус плательщика</th>
             <td mat-cell *matCellDef="let element" [bgColor]="element.color ? element.color : 'white'"
                 style="border-radius: 15px; text-align: center">
-              <mat-select [(value)]="element.status" (selectionChange)="changeClick(element)">
+              <mat-select [(value)]="element.status" (closed)="changeClick(element)">
                 <mat-option style="background: white" value="Не отмечен">Не отмечен</mat-option>
                 <mat-option style="background: #9933CC" value="Связаться">Связаться</mat-option>
                 <mat-option style="background: #6666FF" value="Думает">Думает</mat-option>
@@ -87,7 +87,6 @@
                   <input type="tel" maxlength="10" matInput placeholder="777-123-45-67" formControlName="phone">
                   <mat-icon matSuffix>mode_edit</mat-icon>
                 </mat-form-field>
-
 
                 <div class="item-center">
                   <button type="submit" class="btn btn-primary" mat-raised-button color="primary"
